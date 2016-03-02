@@ -1,5 +1,6 @@
 from .. import enums
 from ..requests import Request
+from ..constants import CONTENT_TYPE
 
 
 class RequestBuilder(object):
@@ -19,4 +20,4 @@ class RequestBuilder(object):
         raise NotImplementedError
 
     def _createRequest(self):
-        return Request(*self._requestParams())
+        return Request(self._url, self._requestParams(), CONTENT_TYPE)
