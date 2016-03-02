@@ -1,0 +1,2 @@
+class KushkiException(Exception):
+    pass
