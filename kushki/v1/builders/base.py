@@ -1,4 +1,4 @@
-from .. import enums
+from ..enums import Currencies, Languages
 from ..requests import Request
 from ..constants import CONTENT_TYPE
 
@@ -13,8 +13,8 @@ class RequestBuilder(object):
     def __init__(self, merchant_id, url):
         self._url = url
         self._merchant_id = merchant_id
-        self._currency = enums.Currencies._default
-        self._language = enums.Languages._default
+        self._currency = Currencies._default
+        self._language = Languages._default
 
     def _requestParams(self):
         raise NotImplementedError
