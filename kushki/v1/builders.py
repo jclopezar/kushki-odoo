@@ -112,7 +112,7 @@ class TokenRequestBuilder(RequestBuilder):
                 constants.PARAMETER_CARD_EXP_MONTH: self._card_expiry_month,
                 constants.PARAMETER_CARD_EXP_YEAR: self._card_expiry_year,
                 constants.PARAMETER_CARD_CVC: self._card_cvc,
-                }
+            }
         }
 
 
