@@ -1,5 +1,5 @@
 from ..enums import Currencies, Languages
-from ..requests import Request
+from ..handling import Request
 from ..constants import CONTENT_TYPE
 
 

@@ -1,6 +1,7 @@
-from . import constants, exceptions
 import json
 import base64
+import requests
+from . import constants, exceptions
 
 
 from Crypto.Cipher import PKCS1_v1_5
@@ -67,3 +68,37 @@ class Request(object):
                                              "de encriptacion", 1, None)
         except Exception as e:
             raise exceptions.KushkiException("No se puede encriptar porque ocurrio un error interno", 2, e)
+
+
+class Response(object):
+    """
+    Abstraccion para armar una respuesta recibida desde el backend de Kushki.
+    """
+
+    def __init__(self, content_type, body, code):
+        self._content_type = content_type
+        self._body = body
+        self._code = code
+
+    content_type = property(lambda self: self._content_type)
+    body = property(lambda self: self._body)
+    code = property(lambda self: self._code)
+    successful = property(lambda self: self._code == 200)
+    token = property(lambda self: self._body['transaction_token'])
+    ticket_number = property(lambda self: self._body['ticket_number'])
+    approved_amount = property(lambda self: self._body['approved_amount'])
+    response_code = property(lambda self: self._body['response_code'])
+    response_text = property(lambda self: self._body['response_text'])
+
+
+class RequestHandler(object):
+
+    def __init__(self, request):
+        self._request = request
+
+    def __call__(self):
+        try:
+            response = requests.post(self._request.url, json=self._request.body, verify=True)
+            return Response(response.headers['Content-Type'], response.json(), response.status_code)
+        except Exception as e:
+            raise exceptions.KushkiException("No se pudo realizar la peticion porque ocurrio un error interno", 3, e)
