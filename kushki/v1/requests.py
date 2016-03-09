@@ -3,11 +3,17 @@ import json
 import base64
 
 
+from Crypto.Cipher import PKCS1_v1_5
+from Crypto.PublicKey import RSA
+# TODO change this later. Currently kushki uses PKCS1 both in php and this implementation (they should use OAEP).
+# TODO masking with MGF1 and hashing with SHA1 will be used for PHP if the constant chanes to OAEP setting.
+encrypter = PKCS1_v1_5.new(RSA.importKey(constants.KUSHKI_PUBLIC_KEY))
+
+
 class Request(object):
     """
     Abstraccion para realizar una peticion al servidor de Kushki.
     """
-    # TODO este desarrollo esta incompleto. Verlo bien abajo.
 
     def __init__(self, url, params, content_type=constants.CONTENT_TYPE):
         self._url = url
@@ -54,8 +60,4 @@ class Request(object):
             for idx in range(0, len(s), 117):
                 yield s[idx:idx+117]
 
-        def encrypt(s):
-            # TODO hacer bien esta parte con pycrypto.
-            return s
-
-        return "".join([base64.b64encode(encrypt(chunk)).replace("\n", "") + "<FS>" for chunk in chunker(plain)])
+        return "".join([base64.b64encode(encrypter.encrypt(chunk)).replace("\n", "") + "<FS>" for chunk in chunker(plain)])
