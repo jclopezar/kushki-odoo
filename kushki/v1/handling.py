@@ -1,3 +1,4 @@
+# coding=utf-8
 import json
 import base64
 import requests
@@ -64,10 +65,10 @@ class Request(object):
             return "".join([base64.b64encode(encrypter.encrypt(chunk)).replace("\n", "") + "<FS>"
                             for chunk in chunker(plain)])
         except ValueError:
-            raise exceptions.KushkiException("No se puede encriptar porque el contenido es mas largo que la clave "
-                                             "de encriptacion", 1, None)
+            raise exceptions.KushkiException(u"No se puede encriptar porque el contenido es más largo que la clave "
+                                             u"de encriptación", 1, None)
         except Exception as e:
-            raise exceptions.KushkiException("No se puede encriptar porque ocurrio un error interno", 2, e)
+            raise exceptions.KushkiException(u"No se puede encriptar porque ocurrió un error interno", 2, e)
 
 
 class Response(object):
@@ -101,4 +102,4 @@ class RequestHandler(object):
             response = requests.post(self._request.url, json=self._request.body, verify=True)
             return Response(response.headers['Content-Type'], response.json(), response.status_code)
         except Exception as e:
-            raise exceptions.KushkiException("No se pudo realizar la peticion porque ocurrio un error interno", 3, e)
+            raise exceptions.KushkiException(u"No se pudo realizar la petición porque ocurrió un error interno", 3, e)
