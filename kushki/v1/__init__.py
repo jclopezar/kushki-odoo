@@ -1,5 +1,5 @@
 # coding=utf-8
-from . import enums, exceptions
+from . import enums, exceptions, builders
 
 
 class Kushki(object):
@@ -37,7 +37,63 @@ class Kushki(object):
         Ejecuta una peticion a la API.
         :param klass: Clase de RequestBuilder a usar.
         :param args: Argumentos adicionales.
-        :return: el objeto Response obtenido.
+        :return: El objeto Response obtenido.
         """
+
         instance = klass(self.merchant_id, *args)
         return instance()
+
+    def charge(self, token, amount):
+        """
+        Efectiviza un pago.
+        :param token: Token a efectivizar.
+        :param amount: Valor a comprobar respecto del token efectivo.
+        :return: El objeto Response obtenido.
+        """
+
+        self._validate_amount(amount)
+        return self._execute(builders.ChargeRequestBuilder, token, amount)
+
+    def deferred_charge(self, token, amount, months, interest):
+        """
+        Efectiviza un pago en cuotas.
+        :param token: Token a efectivizar.
+        :param amount: Valor a comprobar respecto del token efectivo.
+        :param months: Cantidad de meses.
+        :param interest: Interes aplicado.
+        :return: El objeto Response obtenido.
+        """
+
+        self._validate_amount(amount)
+        return self._execute(builders.DeferredChargeRequestBuilder, token, amount, months, interest)
+
+    def void_charge(self, ticket, amount):
+        """
+        Anula un pago.
+        :param ticket: El ticket del pago a anular.
+        :param amount: El monto del pago a anular.
+        :return: El objeto Response obtenido.
+        """
+
+        self._validate_amount(amount)
+        return self._execute(builders.VoidRequestBuilder, ticket, amount)
+
+    def refund_charge(self, ticket, amount):
+        """
+        Devuelve un pago.
+        :param ticket: El ticket del pago a devolver.
+        :param amount: La cantidad a devolver.
+        :return: El objeto Response obtenido.
+        """
+
+        self._validate_amount(amount)
+        return self._execute(builders.RefundRequestBuilder, ticket, amount)
+
+    def request_token(self, card_params):
+        """
+        Obtiene un token para esos parametros.
+        :param card_params: Un diccionario con los parametros de la tarjeta.
+        :return: El objeto Response obtenido.
+        """
+
+        return self._execute(builders.TokenRequestBuilder, card_params)
