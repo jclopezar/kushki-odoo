@@ -59,5 +59,11 @@ class Request(object):
         def chunker(s):
             for idx in range(0, len(s), 117):
                 yield s[idx:idx+117]
-
-        return "".join([base64.b64encode(encrypter.encrypt(chunk)).replace("\n", "") + "<FS>" for chunk in chunker(plain)])
+        try:
+            return "".join([base64.b64encode(encrypter.encrypt(chunk)).replace("\n", "") + "<FS>"
+                            for chunk in chunker(plain)])
+        except ValueError:
+            raise exceptions.KushkiException("No se puede encriptar porque el contenido es mas largo que la clave "
+                                             "de encriptacion", 1, None)
+        except Exception as e:
+            raise exceptions.KushkiException("No se puede encriptar porque ocurrio un error interno", 2, e)
