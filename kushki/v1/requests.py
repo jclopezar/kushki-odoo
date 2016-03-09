@@ -44,9 +44,9 @@ class Request(object):
         :return:
         """
 
-        return json.dumps({
+        return {
             'request': self._encrypted_message_chunk(json.dumps(self.params))
-        })
+        }
 
     @staticmethod
     def _encrypted_message_chunk(plain):
