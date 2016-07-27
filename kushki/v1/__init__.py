@@ -79,16 +79,18 @@ class Kushki(object):
         self._validate_amount(amount)
         return self._execute(builders.VoidRequestBuilder, ticket, amount)
 
-    def refund_charge(self, ticket, amount):
-        """
-        Devuelve un pago.
-        :param ticket: El ticket del pago a devolver.
-        :param amount: La cantidad a devolver.
-        :return: El objeto Response obtenido.
-        """
-
-        self._validate_amount(amount)
-        return self._execute(builders.RefundRequestBuilder, ticket, amount)
+    # NOT SUPPORTED ANYMORE
+    #
+    # def refund_charge(self, ticket, amount):
+    #     """
+    #     Devuelve un pago.
+    #     :param ticket: El ticket del pago a devolver.
+    #     :param amount: La cantidad a devolver.
+    #     :return: El objeto Response obtenido.
+    #     """
+    #
+    #     self._validate_amount(amount)
+    #     return self._execute(builders.RefundRequestBuilder, ticket, amount)
 
     def request_token(self, card_params):
         """
