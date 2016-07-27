@@ -7,6 +7,7 @@ REFUND_URL = URL + "/refund"
 DEFERRED_URL = URL + "/deferred"
 PARAMETER_MERCHANT_ID = "merchant_identifier"
 PARAMETER_LANGUAGE = "language_indicator"
+PARAMETER_REMEMBER_ME = 'remember_me'
 PARAMETER_TRANSACTION_TOKEN = "transaction_token"
 PARAMETER_TRANSACTION_TICKET = "ticket_number"
 PARAMETER_TRANSACTION_ID = "transaction_id"
