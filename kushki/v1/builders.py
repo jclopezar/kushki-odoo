@@ -36,7 +36,7 @@ class ChargeRequestBuilder(RequestBuilder):
     def _requestParams(self):
         return {
             constants.PARAMETER_TRANSACTION_TOKEN: self._token,
-            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount,
+            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount.to_hash(),
             constants.PARAMETER_CURRENCY_CODE: self._currency,
             constants.PARAMETER_MERCHANT_ID: self._merchant_id,
             constants.PARAMETER_LANGUAGE: self._language
@@ -58,7 +58,7 @@ class DeferredChargeRequestBuilder(RequestBuilder):
     def _requestParams(self):
         return {
             constants.PARAMETER_TRANSACTION_TOKEN: self._token,
-            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount,
+            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount.to_hash(),
             constants.PARAMETER_MONTHS: self._months,
             constants.PARAMETER_INTEREST: self._interest,
             constants.PARAMETER_CURRENCY_CODE: self._currency,
@@ -133,7 +133,7 @@ class VoidRequestBuilder(RequestBuilder):
     def _requestParams(self):
         return {
             constants.PARAMETER_TRANSACTION_TICKET: self._ticket,
-            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount,
+            constants.PARAMETER_TRANSACTION_AMOUNT: self._amount.to_hash(),
             constants.PARAMETER_CURRENCY_CODE: self._currency,
             constants.PARAMETER_MERCHANT_ID: self._merchant_id,
             constants.PARAMETER_LANGUAGE: self._language

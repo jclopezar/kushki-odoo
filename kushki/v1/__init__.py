@@ -50,24 +50,22 @@ class Kushki(object):
         """
         Efectiviza un pago.
         :param token: Token a efectivizar.
-        :param amount: Valor a comprobar respecto del token efectivo.
+        :param amount: Valor (objeto Amount) a comprobar respecto del token efectivo.
         :return: El objeto Response obtenido.
         """
 
-        self._validate_amount(amount)
         return self._execute(builders.ChargeRequestBuilder, token, amount)
 
     def deferred_charge(self, token, amount, months, interest):
         """
         Efectiviza un pago en cuotas.
         :param token: Token a efectivizar.
-        :param amount: Valor a comprobar respecto del token efectivo.
+        :param amount: Valor (objeto Amount) a comprobar respecto del token efectivo.
         :param months: Cantidad de meses.
         :param interest: Interes aplicado.
         :return: El objeto Response obtenido.
         """
 
-        self._validate_amount(amount)
         validators.validate_months(months)
         return self._execute(builders.DeferredChargeRequestBuilder, token, amount, months, interest)
 
@@ -75,11 +73,10 @@ class Kushki(object):
         """
         Anula un pago.
         :param ticket: El ticket del pago a anular.
-        :param amount: El monto del pago a anular.
+        :param amount: El monto (objeto Amount) del pago a anular.
         :return: El objeto Response obtenido.
         """
 
-        self._validate_amount(amount)
         return self._execute(builders.VoidRequestBuilder, ticket, amount)
 
     # NOT SUPPORTED ANYMORE
