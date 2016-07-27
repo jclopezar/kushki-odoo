@@ -8,7 +8,7 @@ from . import constants, exceptions
 from Crypto.Cipher import PKCS1_v1_5
 from Crypto.PublicKey import RSA
 # TODO change this later. Currently kushki uses PKCS1 both in php and this implementation (they should use OAEP).
-# TODO masking with MGF1 and hashing with SHA1 will be used for PHP if the constant chanes to OAEP setting.
+# TODO masking with MGF1 and hashing with SHA1 will be used for PHP if the constant changes to OAEP setting.
 encrypter = PKCS1_v1_5.new(RSA.importKey(constants.KUSHKI_PUBLIC_KEY))
 
 
@@ -37,7 +37,6 @@ class Request(object):
             return self.params[param_name]
         except KeyError:
             raise exceptions.KushkiException(constants.PARAMETER_DO_NOT_EXIST)
-
 
     @property
     def body(self):
