@@ -1,4 +1,4 @@
-from .enums import Currencies, Languages
+from .types import Currencies, Languages
 from .handling import Request
 from . import constants
 

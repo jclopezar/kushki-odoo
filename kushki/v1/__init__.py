@@ -1,10 +1,10 @@
 # coding=utf-8
-from . import enums, exceptions, builders
+from . import types, exceptions, builders, validators
 
 
 class Kushki(object):
 
-    def __init__(self, merchant_id, language=enums.Languages._default, currency=enums.Currencies._default):
+    def __init__(self, merchant_id, language=types.Languages._default, currency=types.Currencies._default):
         self._merchant_id = merchant_id
         self._language = language
         self._currency = currency
@@ -65,6 +65,7 @@ class Kushki(object):
         """
 
         self._validate_amount(amount)
+        validators.validate_months(months)
         return self._execute(builders.DeferredChargeRequestBuilder, token, amount, months, interest)
 
     def void_charge(self, ticket, amount):
