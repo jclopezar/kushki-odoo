@@ -1,13 +1,16 @@
 # coding=utf-8
 from . import types, exceptions, builders, validators
+from kushki.v1 import handling
 
 
 class Kushki(object):
 
-    def __init__(self, merchant_id, language=types.Languages._default, currency=types.Currencies._default):
+    def __init__(self, merchant_id, language=types.Languages._default, currency=types.Currencies._default,
+                 environment=types.Environments._default):
         self._merchant_id = merchant_id
         self._language = language
         self._currency = currency
+        self._environment = environment
 
     currency = property(lambda self: self._currency)
     language = property(lambda self: self._language)
@@ -40,7 +43,7 @@ class Kushki(object):
         :return: El objeto Response obtenido.
         """
 
-        instance = klass(self.merchant_id, *args)
+        instance = handling.RequestHandler(klass(self._environment, self.merchant_id, *args))
         return instance()
 
     def charge(self, token, amount):

@@ -28,8 +28,8 @@ class ChargeRequestBuilder(RequestBuilder):
     Constructor para armar una request relacionada a efectivizar un pago mediante su token y su cantidad.
     """
 
-    def __init__(self, merchant_id, token, amount):
-        super(ChargeRequestBuilder, self).__init__(merchant_id, constants.CHARGE_URL)
+    def __init__(self, environment, merchant_id, token, amount):
+        super(ChargeRequestBuilder, self).__init__(merchant_id, environment.charge_url)
         self._token = token
         self._amount = amount
 
@@ -48,8 +48,8 @@ class DeferredChargeRequestBuilder(RequestBuilder):
     Constructor para armar una request relacionada a efectivizar un pago en cuotas mediante su monto y token.
     """
 
-    def __init__(self, merchant_id, token, amount, months, interest):
-        super(DeferredChargeRequestBuilder, self).__init__(merchant_id, constants.DEFERRED_URL)
+    def __init__(self, environment, merchant_id, token, amount, months, interest):
+        super(DeferredChargeRequestBuilder, self).__init__(merchant_id, environment.deferred_url)
         self._token = token
         self._amount = amount
         self._months = months
@@ -94,8 +94,8 @@ class TokenRequestBuilder(RequestBuilder):
     Constructor para armar una request relacionada a obtener un token relacionado con la tarjeta en uso.
     """
 
-    def __init__(self, merchant_id, card_params, remember_me='0'):
-        super(TokenRequestBuilder, self).__init__(merchant_id, constants.TOKENS_URL)
+    def __init__(self, environment, merchant_id, card_params, remember_me='0'):
+        super(TokenRequestBuilder, self).__init__(merchant_id, environment.tokens_url)
         self._card_name = card_params[constants.PARAMETER_CARD_NAME]
         self._card_number = card_params[constants.PARAMETER_CARD_NUMBER]
         self._card_expiry_month = card_params[constants.PARAMETER_CARD_EXP_MONTH]
@@ -125,8 +125,8 @@ class VoidRequestBuilder(RequestBuilder):
     El pago puede devolverse parcial o totalmente.
     """
 
-    def __init__(self, merchant_id, ticket, amount):
-        super(VoidRequestBuilder, self).__init__(merchant_id, constants.VOID_URL)
+    def __init__(self, environment, merchant_id, ticket, amount):
+        super(VoidRequestBuilder, self).__init__(merchant_id, environment.void_url)
         self._ticket = ticket
         self._amount = amount
 
