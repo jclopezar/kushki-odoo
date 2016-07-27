@@ -7,7 +7,7 @@ PY2 = version_info[0] == 2
 
 def get_string_value(number):
     if isinstance(number, float):
-        return "%.2f" % number
+        return "{0:.2f}".format(number)
     elif isinstance(number, int) or PY2 and isinstance(number, long):
         return str(int)
     else:
