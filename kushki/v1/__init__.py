@@ -73,6 +73,9 @@ class Kushki(object):
     #     self._validate_amount(amount)
     #     return self._execute(builders.RefundRequestBuilder, ticket, amount)
 
+    # THIS TRANSACTION GENERATES A TOKEN, AND IT IS NOT USEFUL BESIDE TESTING.
+    # THIS ENTRY POINT IS ALREADY HIT BY THE JAVASCRIPT FRONT-END (the form) AND
+    #   THUS DE BACKEND HAS NOTHING TO DO WITH IT.
     def request_token(self, card_params):
         """
         Obtiene un token para esos parametros.
